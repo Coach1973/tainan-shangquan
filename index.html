@@ -536,6 +536,68 @@
       background: var(--surface);
     }
     .map-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+    /* 「線上服務」店家 — 沒有實體店面可定位，用一致的佔位卡代替地圖 */
+    .map-frame.is-online {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 24px;
+      background:
+        repeating-linear-gradient(135deg,
+          transparent 0 14px,
+          var(--fg-soft) 14px 15px),
+        var(--surface);
+      border-style: dashed;
+      border-color: var(--border);
+    }
+    .map-frame.is-online .online-ribbon {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      background: var(--fg);
+      color: var(--surface);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+    }
+    .map-frame.is-online .online-ribbon .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--cta-purple);
+      animation: ctaPulse 2.6s ease-in-out infinite;
+    }
+    .map-frame.is-online .online-emoji {
+      font-size: 36px;
+      line-height: 1;
+      opacity: 0.55;
+      margin: 4px 0 0;
+    }
+    .map-frame.is-online .online-label {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--fg);
+      letter-spacing: 0.08em;
+    }
+    .map-frame.is-online .online-sub {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-align: center;
+      max-width: 32ch;
+      line-height: 1.5;
+    }
+    .map-frame.is-online .online-cta {
+      margin-top: 2px;
+      font-size: 12px;
+      color: var(--cta-purple-deep);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
 
     .review-block { margin-top: var(--gap-md); }
     .review-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
@@ -837,7 +899,16 @@
 
           <!-- 計劃夥伴店家：邱南寅・小南雕刻｜龍益宗教文物 — 一面牌位，一部家族的故事（策展SOP自動上架，待軍師補完整介紹） -->
           <article class="shop-row reveal">
-            <div>
+            
+            <div class="shop-media">
+              <div class="map-frame">
+                <iframe
+                  src="https://www.google.com/maps?q=%E5%8F%B0%E5%8D%97%E5%B8%82%E5%AE%89%E5%8D%97%E5%8D%80%E5%8C%97%E5%AE%89%E8%B7%AF%E4%BA%8C%E6%AE%B5%20612%20%E8%99%9F&amp;output=embed"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  title="Google 地圖：邱南寅・小南雕刻｜龍益宗教文物（台南市安南區北安路二段 612 號）"></iframe>
+              </div>
+            </div><div>
               <div class="shop-head">
                 <span class="pill">計劃夥伴店家</span>
                 <span class="tag">樂</span>
@@ -854,7 +925,16 @@
 
           <!-- 計劃夥伴店家：柚式藝術 Yo&#x27;s Art ｜ 張騰文．永生花・鈔票花禮・婚禮派對佈置（台南／屏東）（策展SOP自動上架，待軍師補完整介紹） -->
           <article class="shop-row reveal">
-            <div>
+            
+            <div class="shop-media">
+              <div class="map-frame is-online" role="img" aria-label="線上服務">
+                <span class="online-ribbon"><span class="dot" aria-hidden="true"></span>ONLINE · 線上服務</span>
+                <span class="online-emoji" aria-hidden="true">◎</span>
+                <span class="online-label">線上服務</span>
+                <span class="online-sub">工作室與預約制・台南／屏東</span>
+                <span class="online-cta">點下方查看店家專屬網站</span>
+              </div>
+            </div><div>
               <div class="shop-head">
                 <span class="pill">計劃夥伴店家</span>
                 <span class="tag">樂</span>
@@ -871,7 +951,16 @@
 
           <!-- 計劃夥伴店家：陳佩君老師｜鋼琴家・音樂教育家（策展SOP自動上架，待軍師補完整介紹） -->
           <article class="shop-row reveal">
-            <div>
+            
+            <div class="shop-media">
+              <div class="map-frame is-online" role="img" aria-label="純預約制">
+                <span class="online-ribbon"><span class="dot" aria-hidden="true"></span>BY APPT · 純預約制</span>
+                <span class="online-emoji" aria-hidden="true">◎</span>
+                <span class="online-label">純預約制</span>
+                <span class="online-sub">教學據點依學生約定・台南</span>
+                <span class="online-cta">請透過專屬網站或 LINE 預約</span>
+              </div>
+            </div><div>
               <div class="shop-head">
                 <span class="pill">計劃夥伴店家</span>
                 <span class="tag">育</span>
@@ -889,7 +978,16 @@
 
           <!-- 計劃夥伴店家：幸福導師 Esther 楊在珍｜陪伴退休教師知識創業，完成自己的線上課程（策展SOP自動上架，待軍師補完整介紹） -->
           <article class="shop-row reveal">
-            <div>
+            
+            <div class="shop-media">
+              <div class="map-frame is-online" role="img" aria-label="線上課程">
+                <span class="online-ribbon"><span class="dot" aria-hidden="true"></span>ONLINE · 線上課程</span>
+                <span class="online-emoji" aria-hidden="true">◎</span>
+                <span class="online-label">線上課程</span>
+                <span class="online-sub">100% 線上・全國可上課</span>
+                <span class="online-cta">100% 線上・全國可上課</span>
+              </div>
+            </div><div>
               <div class="shop-head">
                 <span class="pill">計劃夥伴店家</span>
                 <span class="tag">育</span>
@@ -908,7 +1006,16 @@
 
           <!-- 計劃夥伴店家：謝緯翔｜理賠領航員 · 方碩方顧問有限公司 創辦人／執行長（策展SOP自動上架，待軍師補完整介紹） -->
           <article class="shop-row reveal">
-            <div>
+            
+            <div class="shop-media">
+              <div class="map-frame">
+                <iframe
+                  src="https://www.google.com/maps?q=%E5%8F%B0%E5%8D%97%E5%B8%82%E9%BA%BB%E8%B1%86%E5%8D%80%E6%B2%B9%E8%BB%8A%E9%87%8C%E8%87%AA%E7%94%B1%E8%B7%AF%2043%20%E4%B9%8B%2023%20%E8%99%9F&amp;output=embed"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  title="Google 地圖：謝緯翔｜方碩方顧問（麻豆）（台南市麻豆區油車里自由路 43 之 23 號）"></iframe>
+              </div>
+            </div><div>
               <div class="shop-head">
                 <span class="pill">計劃夥伴店家</span>
                 <span class="tag">樂</span>
@@ -929,7 +1036,16 @@
 
           <!-- 計劃夥伴店家：楊尚儒 Shang-Ju Yang, D.M.A.｜小提琴・中提琴・弦樂團訓練｜台南（策展SOP自動上架，待軍師補完整介紹） -->
           <article class="shop-row reveal">
-            <div>
+            
+            <div class="shop-media">
+              <div class="map-frame is-online" role="img" aria-label="純預約制">
+                <span class="online-ribbon"><span class="dot" aria-hidden="true"></span>BY APPT · 純預約制</span>
+                <span class="online-emoji" aria-hidden="true">◎</span>
+                <span class="online-label">純預約制</span>
+                <span class="online-sub">家教／樂團排練・台南</span>
+                <span class="online-cta">請透過專屬網站或 LINE 預約</span>
+              </div>
+            </div><div>
               <div class="shop-head">
                 <span class="pill">計劃夥伴店家</span>
                 <span class="tag">育</span>
@@ -946,7 +1062,16 @@
 
           <!-- 計劃夥伴店家：傅恩平｜商務英漢通譯・榮益齋有限公司（策展SOP自動上架，待軍師補完整介紹） -->
           <article class="shop-row reveal">
-            <div>
+            
+            <div class="shop-media">
+              <div class="map-frame">
+                <iframe
+                  src="https://www.google.com/maps?q=%E8%87%BA%E5%8D%97%E5%B8%82%E5%96%84%E5%8C%96%E5%8D%80%E6%9D%B1%E9%97%9C%E9%87%8C%E4%B8%AD%E6%AD%A3%E8%B7%AF%20637%20%E8%99%9F&amp;output=embed"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  title="Google 地圖：傅恩平｜榮益齋有限公司（臺南市善化區東關里中正路 637 號）"></iframe>
+              </div>
+            </div><div>
               <div class="shop-head">
                 <span class="pill">計劃夥伴店家</span>
                 <span class="tag">樂</span>
@@ -963,7 +1088,16 @@
 
           <!-- 計劃夥伴店家：張育慈｜順業肥料資材行 — 彰化溪州．有機肥料與農業資材（策展SOP自動上架，待軍師補完整介紹） -->
           <article class="shop-row reveal">
-            <div>
+            
+            <div class="shop-media">
+              <div class="map-frame">
+                <iframe
+                  src="https://www.google.com/maps?q=%E5%BD%B0%E5%8C%96%E7%B8%A3%E6%BA%AA%E5%B7%9E%E9%84%89%E6%BA%AA%E5%8E%9D%E6%9D%91%E6%96%B0%E8%B7%AF%2018%20%E8%99%9F&amp;output=embed"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  title="Google 地圖：張育慈｜順業肥料資材行（彰化縣溪州鄉溪厝村新路 18 號）"></iframe>
+              </div>
+            </div><div>
               <div class="shop-head">
                 <span class="pill">計劃夥伴店家</span>
                 <span class="tag">食</span>
@@ -980,7 +1114,16 @@
 
           <!-- 計劃夥伴店家：百聖廣告設計工程有限公司｜台南大圖輸出・廣告工程・活動場佈施工（策展SOP自動上架，待軍師補完整介紹） -->
           <article class="shop-row reveal">
-            <div>
+            
+            <div class="shop-media">
+              <div class="map-frame">
+                <iframe
+                  src="https://www.google.com/maps?q=%E5%8F%B0%E5%8D%97%E5%B8%82%E5%AE%89%E5%8D%97%E5%8D%80%E5%AE%89%E5%92%8C%E8%B7%AF%E5%9B%9B%E6%AE%B5%2094%20%E5%B7%B7%2057%20%E8%99%9F&amp;output=embed"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  title="Google 地圖：百聖廣告設計工程（台南市安南區安和路四段 94 巷 57 號）"></iframe>
+              </div>
+            </div><div>
               <div class="shop-head">
                 <span class="pill">計劃夥伴店家</span>
                 <span class="tag">樂</span>
@@ -997,7 +1140,16 @@
 
           <!-- 計劃夥伴店家：EVERYDAY CAFÉ 台南三店｜生吐司早午餐．勝利店・海安店・陽光公園店（策展SOP自動上架，待軍師補完整介紹） -->
           <article class="shop-row reveal">
-            <div>
+            
+            <div class="shop-media">
+              <div class="map-frame">
+                <iframe
+                  src="https://www.google.com/maps?q=%E5%8F%B0%E5%8D%97%E5%B8%82%E5%8C%97%E5%8D%80%E5%8B%9D%E5%88%A9%E8%B7%AF%20204%20%E8%99%9F%201%20%E6%A8%93&amp;output=embed"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  title="Google 地圖：EVERYDAY CAFÉ 勝利店（台南市北區勝利路 204 號 1 樓）"></iframe>
+              </div>
+            </div><div>
               <div class="shop-head">
                 <span class="pill">計劃夥伴店家</span>
                 <span class="tag">食</span>
@@ -1014,7 +1166,16 @@
 
           <!-- 計劃夥伴店家：牛市町｜只漲不跌的美味 — 品牌理念（策展SOP自動上架，待軍師補完整介紹） -->
           <article class="shop-row reveal">
-            <div>
+            
+            <div class="shop-media">
+              <div class="map-frame is-online" role="img" aria-label="市場攤位">
+                <span class="online-ribbon"><span class="dot" aria-hidden="true"></span>MARKET · 市場攤位</span>
+                <span class="online-emoji" aria-hidden="true">◎</span>
+                <span class="online-label">市場攤位</span>
+                <span class="online-sub">傳統市場・進駐位置依檔期調整</span>
+                <span class="online-cta">依檔期進駐・請見店家專屬網站</span>
+              </div>
+            </div><div>
               <div class="shop-head">
                 <span class="pill">計劃夥伴店家</span>
                 <span class="tag">食</span>
@@ -1030,7 +1191,16 @@
 
           <!-- 計劃夥伴店家：七口灶 黑糖農莊（策展SOP 2026-09-06） -->
           <article class="shop-row reveal">
-            <div>
+            
+            <div class="shop-media">
+              <div class="map-frame">
+                <iframe
+                  src="https://www.google.com/maps?q=%E5%8F%B0%E5%8D%97%E5%B8%82%E5%8D%97%E5%8C%96%E5%8D%80%E9%97%9C%E5%B1%B1%E9%87%8C&amp;output=embed"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  title="Google 地圖：七口灶 黑糖農莊（南化區關山里）（台南市南化區關山里）"></iframe>
+              </div>
+            </div><div>
               <div class="shop-head">
                 <span class="pill">計劃夥伴店家</span>
                 <span class="tag">食</span>
@@ -1048,7 +1218,16 @@
 
           <!-- 計劃夥伴店家：立馬吃一鍋 E.Ma Hot Pot · 台南安平店 -->
           <article class="shop-row reveal">
-            <div>
+            
+            <div class="shop-media">
+              <div class="map-frame">
+                <iframe
+                  src="https://www.google.com/maps?q=%E5%8F%B0%E5%8D%97%E5%B8%82%E5%AE%89%E5%B9%B3%E5%8D%80%E6%96%87%E5%B9%B3%E8%B7%AF%20247%20%E8%99%9F&amp;output=embed"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  title="Google 地圖：立馬吃一鍋 E.Ma Hot Pot 安平店（台南市安平區文平路 247 號）"></iframe>
+              </div>
+            </div><div>
               <div class="shop-head">
                 <span class="pill">計劃夥伴店家</span>
                 <span class="tag">食</span>
@@ -1070,7 +1249,16 @@
 
           <!-- 計劃夥伴店家：中華網紅協會 CICA -->
           <article class="shop-row reveal">
-            <div>
+            
+            <div class="shop-media">
+              <div class="map-frame is-online" role="img" aria-label="協會">
+                <span class="online-ribbon"><span class="dot" aria-hidden="true"></span>ORG · 協會</span>
+                <span class="online-emoji" aria-hidden="true">◎</span>
+                <span class="online-label">協會</span>
+                <span class="online-sub">秘書處聯繫制</span>
+                <span class="online-cta">秘書處聯繫制・請見專屬網站</span>
+              </div>
+            </div><div>
               <div class="shop-head">
                 <span class="pill">計劃夥伴店家</span>
                 <span class="tag">育</span>
@@ -1088,7 +1276,16 @@
 
           <!-- 計劃夥伴店家：林貝羿・逸心生技 -->
           <article class="shop-row reveal">
-            <div>
+            
+            <div class="shop-media">
+              <div class="map-frame is-online" role="img" aria-label="品牌官網">
+                <span class="online-ribbon"><span class="dot" aria-hidden="true"></span>ONLINE · 品牌官網</span>
+                <span class="online-emoji" aria-hidden="true">◎</span>
+                <span class="online-label">品牌官網</span>
+                <span class="online-sub">淳清淨品牌・線上購買</span>
+                <span class="online-cta">淳清淨品牌・線上購買</span>
+              </div>
+            </div><div>
               <div class="shop-head">
                 <span class="pill">計劃夥伴店家</span>
                 <span class="tag">衣</span>
@@ -1133,7 +1330,16 @@
 
           <!-- 計劃夥伴店家：臺南匹克藝術扶輪社 -->
           <article class="shop-row reveal">
-            <div>
+            
+            <div class="shop-media">
+              <div class="map-frame is-online" role="img" aria-label="社團">
+                <span class="online-ribbon"><span class="dot" aria-hidden="true"></span>CLUB · 社團</span>
+                <span class="online-emoji" aria-hidden="true">◎</span>
+                <span class="online-label">社團</span>
+                <span class="online-sub">扶輪社例會・依社友公告</span>
+                <span class="online-cta">扶輪社例會・依社友公告</span>
+              </div>
+            </div><div>
               <div class="shop-head">
                 <span class="pill">計劃夥伴店家</span>
                 <span class="tag">樂</span>
@@ -1151,7 +1357,16 @@
 
           <!-- 計劃夥伴店家：KingMauii 金茂宜咖啡 -->
           <article class="shop-row reveal">
-            <div>
+            
+            <div class="shop-media">
+              <div class="map-frame is-online" role="img" aria-label="請洽店家">
+                <span class="online-ribbon"><span class="dot" aria-hidden="true"></span>PENDING · 門市待補</span>
+                <span class="online-emoji" aria-hidden="true">◎</span>
+                <span class="online-label">請洽店家</span>
+                <span class="online-sub">門市資訊待補・請看店家專屬網站</span>
+                <span class="online-cta">門市資訊未公開・請看店家專屬網站</span>
+              </div>
+            </div><div>
               <div class="shop-head">
                 <span class="pill">計劃夥伴店家</span>
                 <span class="tag">食</span>
