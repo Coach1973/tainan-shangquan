@@ -31,6 +31,12 @@
       --border:  #DDD5C6;   /* hairlines, dividers */
       --accent:  #B0402B;   /* 丹朱 — at most 2× per screen */
 
+      /* CTA「查看店家專屬網站」專用 — 大台南策展中心粉紫色系 */
+      --cta-purple:        #C026D3;   /* fuchsia-600 — 主色，給 CTA 按鈕用 */
+      --cta-purple-deep:   #A21CAF;   /* fuchsia-700 — hover 加深 */
+      --cta-purple-soft:   #F0ABFC;   /* fuchsia-300 — 柔光暈 */
+      --cta-purple-glow:   rgba(192, 38, 211, 0.45);  /* 動態發光 */
+
       /* derived — do not change */
       --accent-soft: color-mix(in oklch, var(--accent) 14%, transparent);
       --fg-soft:     color-mix(in oklch, var(--fg) 6%, transparent);
@@ -436,7 +442,90 @@
     .shop-facts li { display: grid; grid-template-columns: 5.5em 1fr; gap: var(--gap-sm); padding: 6px 0; font-size: 14px; border-top: 1px solid var(--border); }
     .shop-facts li:first-child { border-top: 0; }
     .shop-facts .k { font-family: var(--font-mono); font-size: 12px; color: var(--muted); letter-spacing: 0.04em; padding-top: 3px; }
-    .slot-note { margin: var(--gap-sm) 0 0; font-size: 13px; color: var(--muted); }
+    /* ─── 「查看店家專屬網站」CTA 按鈕 ───────────────────────────────
+       18 張店家卡片共用 — 粉紫底＋柔光暈呼吸＋箭頭搖＋漸層掃光，
+       一定要比標題更明顯，否則朋友看不到、店家心血白費。
+       respect prefers-reduced-motion：動畫全關。 */
+    @keyframes ctaPulse {
+      0%, 100% { box-shadow: 0 0 0 0 var(--cta-purple-glow), 0 6px 18px -8px rgba(192, 38, 211, 0.40); }
+      50%      { box-shadow: 0 0 0 10px transparent, 0 10px 28px -6px rgba(192, 38, 211, 0.55); }
+    }
+    @keyframes ctaArrowNudge {
+      0%, 100% { transform: translateX(0); }
+      50%      { transform: translateX(4px); }
+    }
+    @keyframes ctaShine {
+      0%   { transform: translateX(-120%) skewX(-20deg); }
+      60%  { transform: translateX(180%)  skewX(-20deg); }
+      100% { transform: translateX(180%)  skewX(-20deg); }
+    }
+
+    .slot-note { margin: var(--gap-md) 0 0; }
+    .slot-note a {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--cta-purple) 0%, var(--cta-purple-deep) 100%);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 14.5px;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 0 0 0 var(--cta-purple-glow), 0 6px 18px -8px rgba(192, 38, 211, 0.40);
+      cursor: pointer;
+      overflow: hidden;
+      isolation: isolate;
+      animation: ctaPulse 2.6s ease-in-out infinite;
+      transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    }
+    /* 漸層掃光 — 一道白光從左掃到右，4.5s 一次，給人「按下去有回饋」的感覺 */
+    .slot-note a::before {
+      content: "";
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 0;
+      width: 40%;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.35) 50%,
+        transparent 100%);
+      animation: ctaShine 4.5s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    /* 箭頭 — 文字後面自動加一個，預設就在搖 */
+    .slot-note a::after {
+      content: "→";
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+      font-weight: 700;
+      animation: ctaArrowNudge 1.6s ease-in-out infinite;
+    }
+    /* 文字層要在掃光上面 */
+    .slot-note a > * { position: relative; z-index: 1; }
+    /* hover：顏色加深＋微微抬起＋動畫加速 */
+    .slot-note a:hover {
+      background: linear-gradient(135deg, var(--cta-purple-deep) 0%, #86198F 100%);
+      transform: translateY(-2px);
+      animation-duration: 1.2s;
+    }
+    .slot-note a:hover::before { animation-duration: 1.6s; }
+    .slot-note a:hover::after  { animation-duration: 0.6s; }
+    .slot-note a:active { transform: translateY(0); }
+    /* 鍵盤／螢幕閱讀者焦點 — 用 CTA 紫色不要用 accent 丹朱 */
+    .slot-note a:focus-visible {
+      outline: 3px solid var(--cta-purple-soft);
+      outline-offset: 3px;
+    }
+    /* 尊重使用者設定：關動畫 */
+    @media (prefers-reduced-motion: reduce) {
+      .slot-note a, .slot-note a::before, .slot-note a::after { animation: none; }
+    }
 
     .map-frame {
       aspect-ratio: 16 / 10;
@@ -758,7 +847,7 @@
               <ul class="shop-facts">
                 <li><span class="k">分類</span><span>樂</span></li>
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/curated/xiaonan/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/curated/xiaonan/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
           </article>
 
@@ -775,7 +864,7 @@
               <ul class="shop-facts">
                 <li><span class="k">分類</span><span>樂</span></li>
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/curated/flower-site/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/curated/flower-site/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
           </article>
 
@@ -792,7 +881,7 @@
               <ul class="shop-facts">
                 <li><span class="k">分類</span><span>育</span></li>
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/curated/peipei/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/curated/peipei/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
           </article>
 
@@ -810,7 +899,7 @@
               <ul class="shop-facts">
                 <li><span class="k">分類</span><span>育</span></li>
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/curated/yang-zai-zhen/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/curated/yang-zai-zhen/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
           </article>
 
@@ -829,7 +918,7 @@
               <ul class="shop-facts">
                 <li><span class="k">分類</span><span>樂</span></li>
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/curated/xie-wei-xiang/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/curated/xie-wei-xiang/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
           </article>
 
@@ -850,7 +939,7 @@
               <ul class="shop-facts">
                 <li><span class="k">分類</span><span>育</span></li>
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/curated/yang-shang-ru/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/curated/yang-shang-ru/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
           </article>
 
@@ -867,7 +956,7 @@
               <ul class="shop-facts">
                 <li><span class="k">分類</span><span>樂</span></li>
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/curated/fu-en-ping/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/curated/fu-en-ping/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
           </article>
 
@@ -884,7 +973,7 @@
               <ul class="shop-facts">
                 <li><span class="k">分類</span><span>食</span></li>
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/curated/zhang-yu-ci/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/curated/zhang-yu-ci/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
           </article>
 
@@ -901,7 +990,7 @@
               <ul class="shop-facts">
                 <li><span class="k">分類</span><span>樂</span></li>
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/curated/bai-sheng/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/curated/bai-sheng/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
           </article>
 
@@ -918,7 +1007,7 @@
               <ul class="shop-facts">
                 <li><span class="k">分類</span><span>食</span></li>
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/curated/everydaycaf-tai-nan-san-dian/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/curated/everydaycaf-tai-nan-san-dian/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
           </article>
 
@@ -935,7 +1024,7 @@
               <ul class="shop-facts">
                 <li><span class="k">分類</span><span>食</span></li>
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/curated/niu-shi-ting/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/curated/niu-shi-ting/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
           </article>
 
@@ -953,7 +1042,7 @@
                 <li><span class="k">分類</span><span>食 · 黑糖/製糖體驗</span></li>
                 <li><span class="k">招牌商品</span><span>手工柴燒黑糖、糖廠導覽體驗</span></li>
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/qikouzao/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/qikouzao/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
           </article>
 
@@ -975,7 +1064,7 @@
                 <li><span class="k">社群</span><span><a href="https://www.facebook.com/E.MaHotPot.Tainan" target="_blank" rel="noopener">Facebook 安平店粉絲團</a></span></li>
                 <li><span class="k">LINE</span><span><a href="https://lin.ee/GOVyT5Y" target="_blank" rel="noopener">@ema-hotpot</a></span></li>
               </ul>
-              <p class="slot-note"><a href="https://shops.bymyway.com/ema/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://shops.bymyway.com/ema/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
           </article>
 
@@ -993,7 +1082,7 @@
                 <li><span class="k">分類</span><span>育</span></li>
 
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/cica/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/cica/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
           </article>
 
@@ -1011,7 +1100,7 @@
                 <li><span class="k">分類</span><span>衣</span></li>
                 
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/lin-beiyi/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/lin-beiyi/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
           </article>
 
@@ -1029,7 +1118,7 @@
                 <li><span class="k">分類</span><span>食</span></li>
                 
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/66-harbour/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/66-harbour/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
             <div class="shop-media">
               <div class="map-frame">
@@ -1056,7 +1145,7 @@
                 <li><span class="k">分類</span><span>樂</span></li>
                 
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/tainan-pickleball-art-rotary/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/tainan-pickleball-art-rotary/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
           </article>
 
@@ -1074,7 +1163,7 @@
                 <li><span class="k">分類</span><span>食</span></li>
                 
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/kingmauii-brand-site-github/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/kingmauii-brand-site-github/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
             </div>
           </article>
 
@@ -1097,7 +1186,7 @@
                 <li><span class="k">聯絡方式</span><span><a href="tel:0977310141">0977 310 141</a></span></li>
                 <li><span class="k">社群</span><span><a href="https://www.instagram.com/sdx578888?igsi=NHFjdXU1eWx3MWRq" target="_blank" rel="noopener">Instagram</a></span></li>
               </ul>
-              <p class="slot-note"><a href="https://shops.bymyway.com/huitou/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://shops.bymyway.com/huitou/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
 
               <div class="review-block">
                 <div class="review-head">
@@ -1146,7 +1235,7 @@
                 <li><span class="k">營業時間</span><span>07:30 – 16:00</span></li>
                 <li><span class="k">聯絡方式</span><span><a href="tel:+88662677358">06-2677358</a>・<a href="tel:+886988585279">0988-585279</a></span></li>
               </ul>
-              <p class="slot-note"><a href="https://event.bymyway.com/KR/" target="_blank" rel="noopener">查看店家專屬網站 →</a></p>
+              <p class="slot-note"><a href="https://event.bymyway.com/KR/" target="_blank" rel="noopener">查看店家專屬網站</a></p>
 
               <div class="review-block">
                 <div class="review-head">
